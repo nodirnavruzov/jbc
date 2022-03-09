@@ -1,6 +1,5 @@
 const Employees = require('../models/employees')
 
-// need add validator for all controllers
 module.exports.create = async (req, res) => {
   const body = req.body
   try {
@@ -13,7 +12,6 @@ module.exports.create = async (req, res) => {
     })
   }
 }
-
 
 module.exports.employee = async(req, res) => {
   const id = req.params.id
@@ -59,18 +57,27 @@ module.exports.update = async (req, res) => {
     Employees.findOneAndUpdate({ _id }, { ...data },{
       rawResult: true
     }, (err, result) => {
-      if (err) {
-        throw new Error(err)
+      if (!err && result.value) {
+        res.status(200).json({ id: _id, message: 'Employee successfully updated!' })
       } else {
-        if (result.value) {
-          res.status(200).json({ id: _id, message: 'Employee successfully updated!' })
-        } else {
-          res.status(404).json({message: `Employee can't update, check your params `})
-        }
+        res.status(404).json({message: `Employee can't update, check your params `})
       }
     }) 
   } catch (error) {
     res.status(500).json(error)
+  }
+}
 
+module.exports.deleteEmployee = async (req, res) => {
+  const _id = req.params.id
+  try {
+    const result = await Employees.deleteOne({_id})
+    if (result.deletedCount) {
+      res.status(200).json({message: `Employee ${_id} successfully deleted`})
+    } else {
+      res.status(404).json({message: `Somethink wrong, Employee can't delete`})
+    }
+  } catch (error) {
+    res.status(500).json(error)
   }
 }

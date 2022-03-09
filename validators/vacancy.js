@@ -1,5 +1,5 @@
 const { body, validationResult } = require('express-validator');
-const Vacancy = require('../models/vacancy')
+
 module.exports.createValidator = [
   body('title').exists().withMessage('title required'), 
   body('title').isLength({ min: 2, max: 15}).withMessage('title min: 2, max: 15 symbols'), 

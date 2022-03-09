@@ -1,6 +1,5 @@
 const Post = require('../models/post')
 
-// need add validator for all controllers
 module.exports.create = async (req, res) => {
   const body = req.body
   try {
@@ -8,13 +7,11 @@ module.exports.create = async (req, res) => {
     await newPost.save()
     res.status(201).json({message: `Post: ${newPost.firstName} ${newPost.lastName} successfully created`})
   } catch (error) {
-    console.log('Error Create Post', error.message)
     res.status(500).json({ 
       message: `Some think wrong Post: ${body.title} can't create`
     })
   }
 }
-
 
 module.exports.post = async(req, res) => {
   const id = req.params.id
@@ -49,5 +46,19 @@ module.exports.update = async (req, res) => {
   } catch (error) {
     res.status(500).json(error)
 
+  }
+}
+
+module.exports.deletePost = async (req, res) => {
+  const _id = req.params.id
+  try {
+    const result = await Post.deleteOne({_id})
+    if (result.deletedCount) {
+      res.status(200).json({message: `Post ${_id} successfully deleted`})
+    } else {
+      res.status(404).json({message: `Somethink wrong, Post can't delete`})
+    }
+  } catch (error) {
+    res.status(500).json(error)
   }
 }
