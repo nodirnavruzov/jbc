@@ -1,7 +1,6 @@
 const { body, validationResult } = require('express-validator');
 
-
-module.exports.createEmployees = [
+module.exports.createEmployeeValidator = [
   body('firstName').exists().withMessage('firstName required'), 
   body('firstName').isLength({ min: 2, max: 15}).withMessage('firstName min: 2, max: 15 symbols'), 
 

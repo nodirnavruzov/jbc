@@ -34,7 +34,7 @@ module.exports.get = async(req, res) => {
     if (foundEmployee) {
       res.status(200).json(foundEmployee.toJSON())
     } else {
-      res.status(404).json({message: `Employee with id ${id}not found `})
+      res.status(404).json({message: `Employee with id ${id} not found `})
     }
   } catch (error) {
     res.status(404).json({ message: error })

@@ -1,4 +1,4 @@
-const { Router, json } = require('express')
+const { Router } = require('express')
 const vacancyRoutes = require('./vacancy')
 const employeesRoutes = require('./employees')
 const uploaderRoutes = require('./uploader')

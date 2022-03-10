@@ -2,6 +2,7 @@ const Vacancy = require('../models/vacancy')
 const Candidate = require('../models/candidate')
 const { sendCv } =  require('../service/email')
 
+
 module.exports.create = async(req, res) => {
   const body = req.body
   try {
