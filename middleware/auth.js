@@ -1,3 +1,4 @@
+'use strict'
 const { verifyToken } = require('../service/token')
 
 module.exports = (req, res, next) => {

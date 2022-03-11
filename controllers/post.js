@@ -1,8 +1,9 @@
+'use strict'
 const Post = require('../models/post')
 
 module.exports.create = async (req, res) => {
-  const body = req.body
   try {
+    const body = req.body
     const newPost = new Post(body)
     await newPost.save()
     res.status(201).json({message: `Post: ${newPost.firstName} ${newPost.lastName} successfully created`})
@@ -14,8 +15,8 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.post = async(req, res) => {
-  const id = req.params.id
   try {
+    const id = req.params.id
     const foundPost = await Post.findById({_id: id})
     res.status(200).json(foundPost.toJSON())
   } catch (error) {
@@ -33,9 +34,9 @@ module.exports.list = async(req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  const _id = req.params.id
-  const data = req.body
   try {
+    const _id = req.params.id
+    const data = req.body
     Post.updateOne({ _id }, { ...data }, (err, result) => {
       if (err) {
         throw new Error(err)
@@ -45,13 +46,12 @@ module.exports.update = async (req, res) => {
     }) 
   } catch (error) {
     res.status(500).json(error)
-
   }
 }
 
 module.exports.deletePost = async (req, res) => {
-  const _id = req.params.id
   try {
+    const _id = req.params.id
     const result = await Post.deleteOne({_id})
     if (result.deletedCount) {
       res.status(200).json({message: `Post ${_id} successfully deleted`})

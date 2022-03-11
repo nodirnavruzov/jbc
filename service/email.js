@@ -39,7 +39,6 @@ module.exports.sendContact = async (payload, callback) => {
         pass: process.env.EMAIL_PASSWORD,
       }
     });
-
     transporter.verify( async (error, success) => {
       if (error) {
         callback(error)

@@ -1,11 +1,12 @@
+'use strict'
 const Vacancy = require('../models/vacancy')
 const Candidate = require('../models/candidate')
 const { sendCv } =  require('../service/email')
 
 
 module.exports.create = async(req, res) => {
-  const body = req.body
   try {
+    const body = req.body
     const newVac = new Vacancy(body)
     await newVac.save()
     res.status(201).json({message: `Vacancy: ${newVac.title} successfully created`})
@@ -15,8 +16,8 @@ module.exports.create = async(req, res) => {
 }
 
 module.exports.vacancy = async(req, res) => {
-  const id = req.params.id
   try {
+    const id = req.params.id
     const foundVacancy = await Vacancy.findById({_id: id})
     res.status(200).json(foundVacancy.toJSON())
   } catch (error) {
@@ -26,7 +27,6 @@ module.exports.vacancy = async(req, res) => {
 
 module.exports.listActive = async(req, res) => {
   try {
-   
     let foundVacancy = await Vacancy.find({ "isActive": { "$in": [true] } })
     res.json(foundVacancy) 
   } catch (error) {
@@ -44,9 +44,9 @@ module.exports.list = async(req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  const _id = req.params.id
-  const data = req.body
   try {
+    const _id = req.params.id
+    const data = req.body
     Vacancy.findOneAndUpdate({ _id }, { ...data },{
       rawResult: true
     }, (err, result) => {
@@ -63,8 +63,8 @@ module.exports.update = async (req, res) => {
 
 
 module.exports.deleteVacancy = async (req, res) => {
-  const _id = req.params.id
   try {
+    const _id = req.params.id
     const result = await Vacancy.deleteOne({_id})
     if (result.deletedCount) {
       res.status(200).json({message: `Vacancy ${_id} successfully deleted`})
@@ -96,7 +96,6 @@ module.exports.respond = async (req, res) => {
         }
       })
     }
-    
   } catch (error) {
     res.status(500).json(error)
   }

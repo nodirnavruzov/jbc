@@ -1,8 +1,9 @@
+'use strict'
 const Employees = require('../models/employees')
 
 module.exports.create = async (req, res) => {
-  const body = req.body
   try {
+    const body = req.body
     const newEmployees = new Employees(body)
     await newEmployees.save()
     res.status(201).json({message: `Employees: ${newEmployees.firstName} ${newEmployees.lastName} successfully created`})
@@ -14,8 +15,8 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.employee = async(req, res) => {
-  const id = req.params.id
   try {
+    const id = req.params.id
     const foundEmployee = await Employees.findById({_id: id})
     if (foundEmployee) {
       res.status(200).json(foundEmployee.toJSON())
@@ -28,8 +29,8 @@ module.exports.employee = async(req, res) => {
 }
 
 module.exports.get = async(req, res) => {
-  const id = req.params.id
   try {
+    const id = req.params.id
     const foundEmployee = await Employees.findById({_id: id})
     if (foundEmployee) {
       res.status(200).json(foundEmployee.toJSON())
@@ -51,9 +52,9 @@ module.exports.list = async(req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  const _id = req.params.id
-  const data = req.body
   try {
+    const _id = req.params.id
+    const data = req.body
     Employees.findOneAndUpdate({ _id }, { ...data },{
       rawResult: true
     }, (err, result) => {
@@ -69,8 +70,8 @@ module.exports.update = async (req, res) => {
 }
 
 module.exports.deleteEmployee = async (req, res) => {
-  const _id = req.params.id
   try {
+    const _id = req.params.id
     const result = await Employees.deleteOne({_id})
     if (result.deletedCount) {
       res.status(200).json({message: `Employee ${_id} successfully deleted`})

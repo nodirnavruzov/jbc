@@ -1,3 +1,4 @@
+'use strict'
 const { body, validationResult } = require('express-validator');
 
 module.exports.createPostValidator = [

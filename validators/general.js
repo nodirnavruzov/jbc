@@ -1,4 +1,4 @@
-
+'use strict'
 const { validationResult, param } = require('express-validator');
 
 module.exports.paramsValidator = [

@@ -1,3 +1,4 @@
+'use strict'
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -30,11 +31,11 @@ app.use('/', (req, res) => {
 app.get("*", (req, res) => {
   res.status(404).json({ message: 'Route Not Found.'})
 })
+app.listen(process.env.PORT, process.env.HOST, () => console.log(`Server listening on ${process.env.HOST}:${process.env.PORT}`))
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     console.log('MongoDB connected...')
-    app.listen(process.env.PORT, process.env.HOST, () => console.log(`Server listening on ${process.env.HOST}:${process.env.PORT}`))
     }
   )
   .catch( error => {

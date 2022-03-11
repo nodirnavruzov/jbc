@@ -1,5 +1,5 @@
+'use strict'
 module.exports.vacancy = (payload) => {
-  const linkCv = `http://${process.env.HOST}:${process.env.PORT}/${payload.cv}`
   return `
   <!doctype html>
   <html>
@@ -319,7 +319,7 @@ module.exports.vacancy = (payload) => {
                           <p>Email: ${payload.email}</p>
                           <p>Phone: ${payload.phone}</p>
                           <p>CV: 
-                            <a href="${linkCv}" target="_blank">${payload.firstName} ${payload.lastName}</a> </p>
+                            <a href="${payload.cv}" target="_blank">${payload.firstName} ${payload.lastName}</a> </p>
                           <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                             <tbody>
                               <tr>
@@ -668,7 +668,7 @@ module.exports.contact = (payload) => {
       </style>
     </head>
     <body>
-      <span class="preheader">${payload.coverLetter}</span>
+      <span class="preheader">${payload.message}</span>
       <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
         <tr>
           <td>&nbsp;</td>
