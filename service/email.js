@@ -4,7 +4,7 @@ module.exports.sendCv = async (payload, callback) => {
   try {
     let transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com', // no need to set host or port etc.ed to set host or port etc.
-      port: 465,
+      port: process.env.SMTP_PORT,
       secure: true,
       auth: {
         user: process.env.EMAIL_LOGIN,
@@ -32,7 +32,7 @@ module.exports.sendContact = async (payload, callback) => {
   try {
     let transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com', // no need to set host or port etc.ed to set host or port etc.
-      port: 465,
+      port: process.env.SMTP_PORT,
       secure: true,
       auth: {
         user: process.env.EMAIL_LOGIN,

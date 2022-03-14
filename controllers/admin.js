@@ -14,7 +14,7 @@ module.exports.addAdmin = async (req, res) => {
         if (err) {
           res.status(422).json({ message: 'Failed to create Admin. ' + err })
         } else {
-          res.json({ message: 'Amin successfully added!' })
+          res.json({ message: 'Admin successfully added!' })
         }
       })
     }

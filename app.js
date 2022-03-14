@@ -1,7 +1,6 @@
 'use strict'
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var app = express();
@@ -13,7 +12,6 @@ require('dotenv').config()
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
@@ -31,11 +29,11 @@ app.use('/', (req, res) => {
 app.get("*", (req, res) => {
   res.status(404).json({ message: 'Route Not Found.'})
 })
-app.listen(process.env.PORT, process.env.HOST, () => console.log(`Server listening on ${process.env.HOST}:${process.env.PORT}`))
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    console.log('MongoDB connected...')
+      console.log('MongoDB connected...')
+      app.listen(process.env.PORT, () => console.log(`Server listening on port ${process.env.PORT}`))
     }
   )
   .catch( error => {

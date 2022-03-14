@@ -1,8 +1,7 @@
 'use strict'
 module.exports.uploader = async (req, res) => {
-  const url = `http://${process.env.HOST}:${process.env.PORT}`
+  let url = `http://${process.env.HOST}:${process.env.PORT}`
   try {
-    let url 
     if (req.file.fieldname === 'avatar') {
       url = `${url}/avatar/`+req.file.filename
     } else if(req.file.fieldname === 'image') {
@@ -10,6 +9,7 @@ module.exports.uploader = async (req, res) => {
     } else if (req.file.fieldname === 'resume') {
       url = `${url}/resume/`+req.file.filename
     }
+    console.log(url)
     res.json({
       success: 1,
       file: {
