@@ -1,7 +1,6 @@
 'use strict'
 const Admin = require('../models/admin')
 const { generateToken } = require('../service/token')
-
 module.exports.addAdmin = async (req, res) => {
   try {
     const { email } = req.body
@@ -26,11 +25,16 @@ module.exports.addAdmin = async (req, res) => {
 module.exports.login = async (req, res) => {
   try {
     const {email, password} = req.body
-    const admin = await Admin.findOne({email})
-    if (admin) {
-      Admin.comparePassword(password , admin.password, (err, result) => {
+    const foundAdmin = await Admin.findOne({email})
+    const admin_id = foundAdmin._id.toString()
+    const admin = {
+      id: admin_id,
+      email: foundAdmin.email
+    }
+    if (foundAdmin) {
+      Admin.comparePassword(password , foundAdmin.password, (err, result) => {
         if (!err) {
-          generateToken(email, (err, token) => {
+          generateToken(admin, (err, token) => {
             if (err) throw new Error(err) 
             res.status(200).json({token})
           })

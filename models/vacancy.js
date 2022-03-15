@@ -34,6 +34,10 @@ const vacancySchema = new Schema({
   isActive: {
     type: Boolean,
     default: false,
+  },
+  author: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true,

@@ -1,15 +1,20 @@
 'use strict'
 const Employees = require('../models/employees')
 const { deletePhoto } = require('../utils/photo')
+const { verifyToken } = require('../service/token')
+
 module.exports.create = async (req, res) => {
   try {
-    const body = req.body
-    const newEmployees = new Employees(body)
+    let author
+    verifyToken(req.token, (err, decoded) => {
+      author = decoded.id
+    })
+    const newEmployees = new Employees({...req.body, author})
     await newEmployees.save()
     res.status(201).json({message: `Employees: ${newEmployees.firstName} ${newEmployees.lastName} successfully created`})
   } catch (error) {
     res.status(500).json({ 
-      message: `Some think wrong Employees: ${body.firstName} ${body.lastName} can't create`
+      message: `Some think wrong Employees: ${req.body.firstName} ${req.body.lastName} can't create`
     })
   }
 }

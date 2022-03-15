@@ -25,6 +25,10 @@ const employeesSchema = new Schema({
   to: {
     type: String,
     default: 'Current'
+  },
+  author: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true,

@@ -1,6 +1,6 @@
 'use strict'
 module.exports.uploader = async (req, res) => {
-  let url = `http://${process.env.HOST}`
+  let url = `${process.env.HTTP_METHOD}://${process.env.HOST}`
   try {
     if (req.file.fieldname === 'avatar') {
       url = `${url}/avatar/`+req.file.filename

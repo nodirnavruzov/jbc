@@ -3,13 +3,16 @@ const Post = require('../models/post')
 
 module.exports.create = async (req, res) => {
   try {
-    const body = req.body
-    const newPost = new Post(body)
+    let author
+    verifyToken(req.token, (err, decoded) => {
+      author = decoded.id
+    })
+    const newPost = new Post({...req.body, author})
     await newPost.save()
     res.status(201).json({message: `Post: ${newPost.firstName} ${newPost.lastName} successfully created`})
   } catch (error) {
     res.status(500).json({ 
-      message: `Some think wrong Post: ${body.title} can't create`
+      message: `Some think wrong Post: ${req.body.title} can't create`
     })
   }
 }

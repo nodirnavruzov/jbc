@@ -6,12 +6,15 @@ const { sendCv } =  require('../service/email')
 
 module.exports.create = async(req, res) => {
   try {
-    const body = req.body
-    const newVac = new Vacancy(body)
+    let author
+    verifyToken(req.token, (err, decoded) => {
+      author = decoded.id
+    })
+    const newVac = new Vacancy({...req.body, author})
     await newVac.save()
     res.status(201).json({message: `Vacancy: ${newVac.title} successfully created`})
   } catch (error) {
-    res.status(500).json({message: `Some think wrong Vacancy: ${body.title} can't create`})
+    res.status(500).json({message: `Some think wrong Vacancy: ${req.body.title} can't create`})
   }
 }
 
