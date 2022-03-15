@@ -28,7 +28,7 @@ module.exports.vacancy = async(req, res) => {
 module.exports.listActive = async(req, res) => {
   try {
     let foundVacancy = await Vacancy.find({ "isActive": { "$in": [true] } })
-    res.json(foundVacancy) 
+    res.status(200).json(foundVacancy) 
   } catch (error) {
     res.status(404).json({ message: error })
   }
@@ -37,7 +37,7 @@ module.exports.listActive = async(req, res) => {
 module.exports.list = async(req, res) => {
   try {
     let foundVacancy = await Vacancy.find()
-    res.json(foundVacancy) 
+    res.status(200).json(foundVacancy) 
   } catch (error) {
     res.status(404).json({ message: error })
   }

@@ -1,6 +1,6 @@
 'use strict'
 const Employees = require('../models/employees')
-
+const { deletePhoto } = require('../utils/photo')
 module.exports.create = async (req, res) => {
   try {
     const body = req.body
@@ -72,8 +72,9 @@ module.exports.update = async (req, res) => {
 module.exports.deleteEmployee = async (req, res) => {
   try {
     const _id = req.params.id
-    const result = await Employees.deleteOne({_id})
-    if (result.deletedCount) {
+    const result = await Employees.findOneAndDelete({_id})
+    if (result) {
+      deletePhoto(result)
       res.status(200).json({message: `Employee ${_id} successfully deleted`})
     } else {
       res.status(404).json({message: `Somethink wrong, Employee can't delete`})
